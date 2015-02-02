@@ -27,7 +27,7 @@ public class ProjectTrinity extends BasicGame {
 		try {
 			// Set up the screen and graphic options
 			AppGameContainer app = new AppGameContainer(new ProjectTrinity());
-			app.setDisplayMode(1920, 1080, true);
+			app.setDisplayMode(800, 640, false);
 			app.setShowFPS(true);
 			app.setVSync(true);
 			app.start();
