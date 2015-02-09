@@ -28,9 +28,9 @@ public class Map {
 	}
 	
 	void loadMapInfo(){
-		if (new File("Data/Maps/" + mapName + "-Info.txt").isFile()){
+		if (new File("Data/Maps/" + mapName + "-Info.map").isFile()){
 			try {
-				scanner = new Scanner(new File("Data/Maps/" + mapName + "-Info.txt"));
+				scanner = new Scanner(new File("Data/Maps/" + mapName + "-Info.map"));
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -58,9 +58,9 @@ public class Map {
 	
 	
 	void loadMap(){
-		if (new File("Data/Maps/" + mapName + ".txt").isFile()){
+		if (new File("Data/Maps/" + mapName + ".map").isFile()){
 			try {
-				scanner = new Scanner(new File("Data/Maps/" + mapName + ".txt"));
+				scanner = new Scanner(new File("Data/Maps/" + mapName + ".map"));
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
