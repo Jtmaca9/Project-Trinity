@@ -1,3 +1,6 @@
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -7,14 +10,24 @@ import org.newdawn.slick.SlickException;
 
 public class ProjectTrinity extends BasicGame {
 
-	static boolean p1_move_right = false;
-	static boolean p1_move_left = false;
-	static boolean p1_move_up = false;
-	static boolean p1_move_down = false;
-	static boolean p2_move_right = false;
-	static boolean p2_move_left = false;
-	static boolean p2_move_up = false;
-	static boolean p2_move_down = false;
+	 boolean p1_move_right = false;
+	 boolean p1_move_left = false;
+	 boolean p1_move_up = false;
+	 boolean p1_move_down = false;
+	 boolean p2_move_right = false;
+	 boolean p2_move_left = false;
+	 boolean p2_move_up = false;
+	 boolean p2_move_down = false;
+	 
+	 static float screenOffsetX;
+	 static float screenOffsetY;
+	 float screenOffsetScale;
+	 
+	 String gameState;
+	 static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	 static double width = screenSize.getWidth();
+	 static double height = screenSize.getHeight();
+	 Map currentMap;
 
 
 
@@ -24,10 +37,12 @@ public class ProjectTrinity extends BasicGame {
 	}
 
 	public static void main(String[] arguments) {
+		
+		
 		try {
 			// Set up the screen and graphic options
 			AppGameContainer app = new AppGameContainer(new ProjectTrinity());
-			app.setDisplayMode(800, 640, false);
+			app.setDisplayMode((int)width, (int)height, true);
 			app.setShowFPS(true);
 			app.setVSync(true);
 			app.start();
@@ -39,6 +54,7 @@ public class ProjectTrinity extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		currentMap = new Map("test");
 
 
 
@@ -53,6 +69,7 @@ public class ProjectTrinity extends BasicGame {
 
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		currentMap.render(g, container);
 
 	}
 
