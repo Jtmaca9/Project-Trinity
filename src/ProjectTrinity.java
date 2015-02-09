@@ -10,14 +10,6 @@ import org.newdawn.slick.SlickException;
 
 public class ProjectTrinity extends BasicGame {
 
-	 boolean p1_move_right = false;
-	 boolean p1_move_left = false;
-	 boolean p1_move_up = false;
-	 boolean p1_move_down = false;
-	 boolean p2_move_right = false;
-	 boolean p2_move_left = false;
-	 boolean p2_move_up = false;
-	 boolean p2_move_down = false;
 	 
 	 static float screenOffsetX;
 	 static float screenOffsetY;
@@ -27,7 +19,10 @@ public class ProjectTrinity extends BasicGame {
 	 static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	 static double width = screenSize.getWidth();
 	 static double height = screenSize.getHeight();
+	 
 	 Map currentMap;
+	 Player1 player1;
+	 Player2 player2;
 
 
 
@@ -55,6 +50,8 @@ public class ProjectTrinity extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		currentMap = new Map("test");
+		player1 = new Player1("Tank", currentMap.mapSpawnX, currentMap.mapSpawnY);
+		
 
 
 
@@ -63,6 +60,7 @@ public class ProjectTrinity extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
+		player1.move();
 
 
 	}
@@ -70,6 +68,7 @@ public class ProjectTrinity extends BasicGame {
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
 		currentMap.render(g, container);
+		player1.render(g, container);
 
 	}
 
@@ -77,60 +76,21 @@ public class ProjectTrinity extends BasicGame {
 		
 
 		if (key == Input.KEY_D) {
-			p1_move_right = true;
-			p1_move_up = false;
-			p1_move_down = false;
-			p1_move_left = false;
+			player1.set_moveRight(true);
 		}
 
 		if (key == Input.KEY_A) {
-			p1_move_left = true;
-			p1_move_up = false;
-			p1_move_down = false;
-			p1_move_right = false;
+			player1.set_moveLeft(true);
 		}
 
 		if (key == Input.KEY_W) {
-			p1_move_up = true;
-			p1_move_right = false;
-			p1_move_down = false;
-			p1_move_left = false;
+			player1.set_moveUp(true);
 		}
 
 		if (key == Input.KEY_S) {
-			p1_move_down = true;
-			p1_move_up = false;
-			p1_move_right = false;
-			p1_move_left = false;
+			player1.set_moveDown(true);
 		}
 
-		if (key == Input.KEY_RIGHT) {
-			p2_move_right = true;
-			p2_move_up = false;
-			p2_move_down = false;
-			p2_move_left = false;
-		}
-
-		if (key == Input.KEY_LEFT) {
-			p2_move_left = true;
-			p2_move_up = false;
-			p2_move_down = false;
-			p2_move_right = false;
-		}
-
-		if (key == Input.KEY_UP) {
-			p2_move_up = true;
-			p2_move_right = false;
-			p2_move_down = false;
-			p2_move_left = false;
-		}
-
-		if (key == Input.KEY_DOWN) {
-			p2_move_down = true;
-			p2_move_up = false;
-			p2_move_right = false;
-			p2_move_left = false;
-		}
 
 		if (key == Input.KEY_ESCAPE) {
 			System.exit(0);
@@ -141,44 +101,25 @@ public class ProjectTrinity extends BasicGame {
 	public void keyReleased(int key, char c) {
 
 		if (key == Input.KEY_D) {
-			p1_move_right = false;
+			player1.set_moveRight(false);
 
 		}
 
 		if (key == Input.KEY_A) {
-			p1_move_left = false;
+			player1.set_moveLeft(false);
 
 		}
 
 		if (key == Input.KEY_W) {
-			p1_move_up = false;
+			player1.set_moveUp(false);
 
 		}
 
 		if (key == Input.KEY_S) {
-			p1_move_down = false;
+			player1.set_moveDown(false);
 
 		}
 
-		if (key == Input.KEY_RIGHT) {
-			p2_move_right = false;
-
-		}
-
-		if (key == Input.KEY_LEFT) {
-			p2_move_left = false;
-
-		}
-
-		if (key == Input.KEY_UP) {
-			p2_move_up = false;
-
-		}
-
-		if (key == Input.KEY_DOWN) {
-			p2_move_down = false;
-
-		}
 
 	}
 	

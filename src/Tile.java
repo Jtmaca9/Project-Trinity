@@ -44,6 +44,7 @@ public class Tile {
 	
 	void render(Graphics g, GameContainer container){
 		g.drawImage(tileImage, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		g.drawImage(tileImage, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
 	}
 
 }
