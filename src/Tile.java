@@ -1,7 +1,5 @@
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
 
 
 public class Tile {
@@ -10,7 +8,6 @@ public class Tile {
 	int ypos;
 	int sizeX = 32;
 	int sizeY = 32;
-	Image tileImage;
 	
 	//Tile Properties//
 	boolean block;
@@ -25,26 +22,20 @@ public class Tile {
 	void init(){
 		if(type == 0){
 			block = false;
-			try {
-				tileImage = new Image("Data/Images/Grass.png");
-			} catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}else if(type == 1){
 			block = true;
-			try {
-				tileImage = new Image("Data/Images/Water.png");
-			} catch (SlickException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
 	void render(Graphics g, GameContainer container){
-		g.drawImage(tileImage, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
-		g.drawImage(tileImage, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		if(type == 0){
+		g.drawImage(ProjectTrinity.grassTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		g.drawImage(ProjectTrinity.grassTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		}else if(type == 1){
+		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		}
 	}
+	
 
 }

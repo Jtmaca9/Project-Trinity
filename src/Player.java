@@ -30,6 +30,10 @@ public class Player extends Entity {
 		return moveDown;
 	}
 	
+	float get_speed(){
+		return speed;
+	}
+	
 	void set_moveRight(boolean move){
 		moveRight = move;
 	}
@@ -41,6 +45,10 @@ public class Player extends Entity {
 	}
 	void set_moveDown(boolean move){
 		moveDown = move;
+	}
+	
+	void set_speed(float spd){
+		speed = spd;
 	}
 	
 	

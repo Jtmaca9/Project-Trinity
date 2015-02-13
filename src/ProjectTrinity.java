@@ -3,8 +3,10 @@ import java.awt.Toolkit;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -23,6 +25,9 @@ public class ProjectTrinity extends BasicGame {
 	 Map currentMap;
 	 Player1 player1;
 	 Player2 player2;
+	 
+	 static Image grassTile;
+	 static Image waterTile;
 
 
 
@@ -49,7 +54,9 @@ public class ProjectTrinity extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
+		gameState = "game";
 		currentMap = new Map("test");
+		loadImages();
 		player1 = new Player1("Tank", currentMap.mapSpawnX, currentMap.mapSpawnY);
 		
 
@@ -60,15 +67,22 @@ public class ProjectTrinity extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
+		if(gameState == "game"){
 		player1.move();
+		}
 
 
 	}
 
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
+		g.setColor(Color.white);
+		g.fillRect((float)0, (float)0, (float)width,(float) height);
+		
+		if(gameState == "game"){
 		currentMap.render(g, container);
 		player1.render(g, container);
+		}
 
 	}
 
@@ -121,6 +135,21 @@ public class ProjectTrinity extends BasicGame {
 		}
 
 
+	}
+	
+	void loadImages(){
+		try {
+			grassTile = new Image("Data/Images/Grass.png");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			waterTile = new Image("Data/Images/Water.png");
+		} catch (SlickException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 

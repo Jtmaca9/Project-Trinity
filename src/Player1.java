@@ -8,16 +8,16 @@ public class Player1 extends Player {
 
 	Player1(String n, float x, float y) {
 		super(n);
-		xpos = x;
-		ypos = y;
+		vxpos = x;
+		vypos = y;
 		init();
 		// TODO Auto-generated constructor stub
 	}
 
 	
 	void init(){
-		ProjectTrinity.screenOffsetX += xpos;
-		ProjectTrinity.screenOffsetX += ypos;
+		ProjectTrinity.screenOffsetX += vxpos;
+		ProjectTrinity.screenOffsetX += vypos;
 		speed = 10f;
 		sxpos = (float) (ProjectTrinity.width/2);
 		sypos = (float) (ProjectTrinity.height/2);
@@ -37,21 +37,21 @@ public class Player1 extends Player {
 	void move(){
 		if(moveRight){
 			ProjectTrinity.screenOffsetX += speed;
-			xpos += speed;
+			vxpos += speed;
 			moveLeft = false;
 			moveDown = false;
 			moveUp = false;
 		}
 		if(moveLeft){
 			ProjectTrinity.screenOffsetX -= speed;
-			xpos -= speed;
+			vxpos -= speed;
 			moveRight = false;
 			moveDown = false;
 			moveUp = false;
 		}
 		if(moveUp){
 			ProjectTrinity.screenOffsetY -= speed;
-			ypos -= speed;
+			vypos -= speed;
 			moveLeft = false;
 			moveDown = false;
 			moveRight = false;
@@ -59,7 +59,7 @@ public class Player1 extends Player {
 		
 		if(moveDown){
 			ProjectTrinity.screenOffsetY += speed;
-			ypos += speed;
+			vypos += speed;
 			moveRight = false;
 			moveLeft = false;
 			moveUp = false;
