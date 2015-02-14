@@ -10,6 +10,8 @@ public class Map {
 	String mapName;
 	int mapWidth;
 	int mapHeight;
+	int mapHeightPx;
+	int mapWidthPx;
 	int mapSpawnX;
 	int mapSpawnY;
 	Scanner scanner;
@@ -25,6 +27,8 @@ public class Map {
 	void init(){
 		loadMapInfo();
 		loadMap();
+		mapWidthPx = mapWidth *32;
+		mapHeightPx = mapHeight *32;
 	}
 	
 	void loadMapInfo(){
@@ -83,8 +87,9 @@ public class Map {
 	}
 	
 	void render(Graphics g, GameContainer container){
-		for(int i = 0; i < mapWidth; i++){
-			for(int j = 0; j < mapHeight; j++){
+		for(int i = ProjectTrinity.player1.gridXpos - (ProjectTrinity.tileX); i <  ProjectTrinity.player1.gridXpos + (ProjectTrinity.tileX); i++){
+			for(int j =  ProjectTrinity.player1.gridYpos - (ProjectTrinity.tileY); j < ProjectTrinity.player1.gridYpos + (ProjectTrinity.tileY); j++){
+				if(i >= 0 && i < mapWidth && j >= 0 && j < mapHeight)
 				tiles[i][j].render(g, container);
 			}
 		}

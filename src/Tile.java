@@ -29,11 +29,11 @@ public class Tile {
 	
 	void render(Graphics g, GameContainer container){
 		if(type == 0){
-		g.drawImage(ProjectTrinity.grassTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
-		g.drawImage(ProjectTrinity.grassTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		g.drawImage(ProjectTrinity.grassTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
+		g.drawImage(ProjectTrinity.grassTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
 		}else if(type == 1){
-		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
-		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, ypos * sizeY - ProjectTrinity.screenOffsetY);
+		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
+		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
 		}
 	}
 	

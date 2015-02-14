@@ -8,7 +8,7 @@ public class Player extends Entity {
 	 boolean moveUp = false;
 	 boolean moveDown = false;
 	 
-	 float speed;
+	 int speed;
 	 int size = 32;
 	 Image playerImage;
 
@@ -47,7 +47,7 @@ public class Player extends Entity {
 		moveDown = move;
 	}
 	
-	void set_speed(float spd){
+	void set_speed(int spd){
 		speed = spd;
 	}
 	

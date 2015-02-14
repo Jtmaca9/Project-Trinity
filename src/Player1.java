@@ -5,8 +5,9 @@ import org.newdawn.slick.SlickException;
 
 
 public class Player1 extends Player {
+	String direction;
 
-	Player1(String n, float x, float y) {
+	Player1(String n, int x, int y) {
 		super(n);
 		vxpos = x;
 		vypos = y;
@@ -16,11 +17,12 @@ public class Player1 extends Player {
 
 	
 	void init(){
-		ProjectTrinity.screenOffsetX += vxpos;
-		ProjectTrinity.screenOffsetX += vypos;
-		speed = 10f;
-		sxpos = (float) (ProjectTrinity.width/2);
-		sypos = (float) (ProjectTrinity.height/2);
+		direction = "up";
+		speed = 4;
+		sxpos = (int) (ProjectTrinity.width/2);
+		sypos = (int) (ProjectTrinity.height/2);
+		ProjectTrinity.screenOffsetX -= sxpos;
+		ProjectTrinity.screenOffsetY -= sypos;
 		
 		try {
 			playerImage = new Image("Data/Images/Tank.png");
@@ -34,37 +36,163 @@ public class Player1 extends Player {
 		g.drawImage(playerImage, sxpos, sypos);
 	}
 	
+	void update(){
+		
+		
+		
+		gridXpos = (int) (vxpos / 32);
+		gridYpos = (int) (vypos / 32);
+		move();
+		gridXpos = (int) (vxpos / 32);
+		gridYpos = (int) (vypos / 32);
+		collision();
+		
+		
+		
+	}
+	
 	void move(){
-		if(moveRight){
-			ProjectTrinity.screenOffsetX += speed;
+		if(moveRight){	
+			direction = "right";
+			playerImage.setRotation(90f);
 			vxpos += speed;
+			if(sxpos <= (ProjectTrinity.width/3) *2){
+				sxpos += speed;
+			}else{
+				ProjectTrinity.screenOffsetX += speed;
+				ProjectTrinity.player2.sxpos -=speed;
+			}
 			moveLeft = false;
 			moveDown = false;
 			moveUp = false;
 		}
 		if(moveLeft){
-			ProjectTrinity.screenOffsetX -= speed;
+			direction = "left";
+			playerImage.setRotation(270f);
 			vxpos -= speed;
+			if(sxpos >= (ProjectTrinity.width/3)){
+				sxpos -= speed;
+			}else{
+				ProjectTrinity.screenOffsetX -= speed;
+				ProjectTrinity.player2.sxpos +=speed;
+			}
 			moveRight = false;
 			moveDown = false;
 			moveUp = false;
 		}
 		if(moveUp){
-			ProjectTrinity.screenOffsetY -= speed;
+			direction = "up";
+			playerImage.setRotation(0f);
 			vypos -= speed;
+			if(sypos >= (ProjectTrinity.height/3)){
+				sypos -= speed;
+			}else{
+				ProjectTrinity.screenOffsetY -= speed;
+				ProjectTrinity.player2.sypos +=speed;
+			}
 			moveLeft = false;
 			moveDown = false;
 			moveRight = false;
 		}
 		
 		if(moveDown){
-			ProjectTrinity.screenOffsetY += speed;
+			direction = "down";
+			playerImage.setRotation(180f);
 			vypos += speed;
+			if(sypos <= (ProjectTrinity.height/3) *2){
+				sypos += speed;
+			}else{
+				ProjectTrinity.screenOffsetY += speed;
+				ProjectTrinity.player2.sypos -=speed;
+			}
 			moveRight = false;
 			moveLeft = false;
 			moveUp = false;
 		}
-		
 	}
+		
+		
+		
+	
+	void collision(){
+		for(int i = gridXpos - 2; i < gridXpos + 2;  i++){
+			for(int j = gridYpos - 2; j < gridYpos + 2; j++){
+				if(i > 0 && j > 0 && i < ProjectTrinity.currentMap.mapWidth && j < ProjectTrinity.currentMap.mapHeight){
+					if((vxpos + 28) >= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32)  &&
+							(vxpos) <= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32) +  28 &&
+							(vypos + 28) >= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32)  &&
+							(vypos) <= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32) + 28  ){
+						
+						if(ProjectTrinity.currentMap.tiles[i][j].block){
+			
+						if (direction == "right"){//right
+							vxpos -=speed;
+							sxpos -= speed;
 
+						}else if (direction == "left"){//left
+							vxpos +=speed;
+							sxpos += speed;
+
+						}else if (direction == "up"){//up
+							vypos +=speed;
+							sypos += speed;
+
+						}else if (direction == "down"){//down
+							vypos -=speed;
+							sypos -= speed;
+
+						}
+						}
+
+					}
+				}
+			}
+		}
+		
+		if((vxpos + 28) >= (ProjectTrinity.player2.vxpos)  &&
+				(vxpos) <= (ProjectTrinity.player2.vxpos) +  28 &&
+				(vypos + 28) >= (ProjectTrinity.player2.vypos)  &&
+				(vypos) <= (ProjectTrinity.player2.vypos) + 28  ){
+			if (direction == "right"){//right
+				vxpos -=speed;
+				sxpos -= speed;
+
+			}else if (direction == "left"){//left
+				vxpos +=speed;
+				sxpos += speed;
+
+			}else if (direction == "up"){//up
+				vypos +=speed;
+				sypos += speed;
+
+			}else if (direction == "down"){//down
+				vypos -=speed;
+				sypos -= speed;
+
+			}
+			
+		}
+		
+		if(vxpos < 0 || (vxpos - 28) >= ProjectTrinity.currentMap.mapWidthPx || vypos < 0 || (vypos - 28) >= ProjectTrinity.currentMap.mapHeightPx ){
+			if (direction == "right"){//right
+				vxpos -=speed;
+				sxpos -= speed;
+
+			}else if (direction == "left"){//left
+				vxpos +=speed;
+				sxpos += speed;
+
+			}else if (direction == "up"){//up
+				vypos +=speed;
+				sypos += speed;
+
+			}else if (direction == "down"){//down
+				vypos -=speed;
+				sypos -= speed;
+
+			}
+			
+		}
+	}
 }
+

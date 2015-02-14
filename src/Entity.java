@@ -1,10 +1,10 @@
 
 public class Entity {
 	String name;
-	float vxpos;
-	float vypos;
-	float sxpos;
-	float sypos;
+	int vxpos;
+	int vypos;
+	int sxpos;
+	int sypos;
 	int gridXpos;
 	int gridYpos;
 	
@@ -31,16 +31,16 @@ public class Entity {
 	int get_gridYpos(){
 		return gridYpos;
 	}
-	void set_vxpos(float vxp){
+	void set_vxpos(int vxp){
 		vxpos = vxp;
 	}
-	void set_vypos(float vyp){
+	void set_vypos(int vyp){
 		vypos = vyp;
 	}
-	void set_sxpos(float sxp){
+	void set_sxpos(int sxp){
 		sxpos = sxp;
 	}
-	void set_sypos(float syp){
+	void set_sypos(int syp){
 		sypos = syp;
 	}
 	void set_gridXpos(int gxp){
