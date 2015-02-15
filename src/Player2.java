@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 
 public class Player2 extends Player {
 	String direction;
+	String moveThisWay;
 
 	Player2(String n, int x, int y) {
 		super(n);
@@ -50,42 +51,35 @@ public class Player2 extends Player {
 	}
 	
 	void move(){
-		if(moveRight){	
+		moveThisWay = movementQueue[0];
+		
+		if(moveThisWay == "right"){	
 			direction = "right";
 			playerImage.setRotation(90f);
 			vxpos += speed;
 			sxpos += speed;
-			moveLeft = false;
-			moveDown = false;
-			moveUp = false;
+
 		}
-		if(moveLeft){
+		if(moveThisWay == "left"){
 			direction = "left";
 			playerImage.setRotation(270f);
 			vxpos -= speed;
 			sxpos -= speed;
-			moveRight = false;
-			moveDown = false;
-			moveUp = false;
 		}
-		if(moveUp){
+		if(moveThisWay == "up"){
 			direction = "up";
 			playerImage.setRotation(0f);
 			vypos -= speed;
 			sypos -= speed;
-			moveLeft = false;
-			moveDown = false;
-			moveRight = false;
+
 		}
 		
-		if(moveDown){
-			direction = "down";
+		if(moveThisWay == "down"){
+			direction = "down";			
 			playerImage.setRotation(180f);
 			vypos += speed;
 			sypos += speed;
-			moveRight = false;
-			moveLeft = false;
-			moveUp = false;
+
 		}
 	}
 		

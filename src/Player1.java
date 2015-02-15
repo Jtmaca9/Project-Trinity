@@ -6,6 +6,7 @@ import org.newdawn.slick.SlickException;
 
 public class Player1 extends Player {
 	String direction;
+	String moveThisWay;
 
 	Player1(String n, int x, int y) {
 		super(n);
@@ -52,7 +53,10 @@ public class Player1 extends Player {
 	}
 	
 	void move(){
-		if(moveRight){	
+		
+		moveThisWay = movementQueue[0];
+		
+		if(moveThisWay == "right"){	
 			direction = "right";
 			playerImage.setRotation(90f);
 			vxpos += speed;
@@ -62,11 +66,9 @@ public class Player1 extends Player {
 				ProjectTrinity.screenOffsetX += speed;
 				ProjectTrinity.player2.sxpos -=speed;
 			}
-			moveLeft = false;
-			moveDown = false;
-			moveUp = false;
+
 		}
-		if(moveLeft){
+		if(moveThisWay == "left"){
 			direction = "left";
 			playerImage.setRotation(270f);
 			vxpos -= speed;
@@ -76,11 +78,9 @@ public class Player1 extends Player {
 				ProjectTrinity.screenOffsetX -= speed;
 				ProjectTrinity.player2.sxpos +=speed;
 			}
-			moveRight = false;
-			moveDown = false;
-			moveUp = false;
+
 		}
-		if(moveUp){
+		if(moveThisWay == "up"){
 			direction = "up";
 			playerImage.setRotation(0f);
 			vypos -= speed;
@@ -90,13 +90,11 @@ public class Player1 extends Player {
 				ProjectTrinity.screenOffsetY -= speed;
 				ProjectTrinity.player2.sypos +=speed;
 			}
-			moveLeft = false;
-			moveDown = false;
-			moveRight = false;
+
 		}
 		
-		if(moveDown){
-			direction = "down";
+		if(moveThisWay == "down"){
+			direction = "down";			
 			playerImage.setRotation(180f);
 			vypos += speed;
 			if(sypos <= (ProjectTrinity.height/3) *2){
@@ -105,9 +103,7 @@ public class Player1 extends Player {
 				ProjectTrinity.screenOffsetY += speed;
 				ProjectTrinity.player2.sypos -=speed;
 			}
-			moveRight = false;
-			moveLeft = false;
-			moveUp = false;
+
 		}
 	}
 		
