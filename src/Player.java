@@ -19,13 +19,6 @@ public class Player extends Entity {
 		// TODO Auto-generated constructor stub
 	}
 
-	void init() {
-		noMove = "";
-		movementQueue = new String[4];
-		for (int i = 0; i < 4; i++) {
-			movementQueue[i] = noMove;
-		}
-	}
 
 	Boolean get_moveRight() {
 		return moveRight;

@@ -18,6 +18,11 @@ public class Player1 extends Player {
 
 	
 	void init(){
+		noMove = "";
+		movementQueue = new String[4];
+		for (int i = 0; i < 4; i++) {
+			movementQueue[i] = noMove;
+		}
 		direction = "up";
 		speed = 4;
 		sxpos = (int) (ProjectTrinity.width/2);
