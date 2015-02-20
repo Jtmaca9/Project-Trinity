@@ -1,26 +1,37 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
 
 public class Map {
 	String mapName;
+	String gameMode;
+	
+	int playerCount;
 	int mapWidth;
 	int mapHeight;
 	int mapHeightPx;
 	int mapWidthPx;
 	int mapSpawnX;
 	int mapSpawnY;
+	
 	Scanner scanner;
+	
 	int[][] tileData;
 	int[] mapInfo;
+	
 	Tile[][] tiles;
 	
-	Map(String name){
+	Player1 player1;
+	Player2 player2;
+	
+	Map(String name, String game, int pc){
 		mapName = name;
+		gameMode = game;
+		playerCount = pc;
 		init();
 	}
 	
@@ -29,6 +40,28 @@ public class Map {
 		loadMap();
 		mapWidthPx = mapWidth *32;
 		mapHeightPx = mapHeight *32;
+		if (playerCount == 1){
+			player1 = new Player1("Player 1","Warrior", mapSpawnX, mapSpawnY);
+		}
+		else if (playerCount == 2){
+			player1 = new Player1("Player 1", "Warrior",  mapSpawnX, mapSpawnY);
+			player2 = new Player2("Player 2","Priest",  mapSpawnX, mapSpawnY);
+		}
+		
+		
+	}
+	
+	void update(){
+		if (playerCount == 1){
+			
+		player1.update();
+		
+		}else if(playerCount == 2){
+			
+		player1.update();	
+		player2.update();
+		
+		}
 	}
 	
 	void loadMapInfo(){
@@ -87,12 +120,20 @@ public class Map {
 	}
 	
 	void render(Graphics g, GameContainer container){
-		for(int i = ProjectTrinity.player1.gridXpos - (ProjectTrinity.tileX); i <  ProjectTrinity.player1.gridXpos + (ProjectTrinity.tileX); i++){
-			for(int j =  ProjectTrinity.player1.gridYpos - (ProjectTrinity.tileY); j < ProjectTrinity.player1.gridYpos + (ProjectTrinity.tileY); j++){
+		for(int i = player1.gridXpos - (ProjectTrinity.tileX); i <  player1.gridXpos + (ProjectTrinity.tileX); i++){
+			for(int j =  player1.gridYpos - (ProjectTrinity.tileY); j < player1.gridYpos + (ProjectTrinity.tileY); j++){
 				if(i >= 0 && i < mapWidth && j >= 0 && j < mapHeight)
 				tiles[i][j].render(g, container);
 			}
 		}
+		
+		if (playerCount == 1){
+		player1.render(g, container);
+		}else if (playerCount == 2){
+		player1.render(g, container);
+		player2.render(g, container);
+		}
+		
 	}
 	
 	

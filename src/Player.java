@@ -1,3 +1,6 @@
+import org.newdawn.slick.Color;
+import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 public class Player extends Entity {
@@ -10,13 +13,49 @@ public class Player extends Entity {
 	String movementQueue[];
 	String noMove;
 
-	int speed;
 	int size = 32;
 	Image playerImage;
+	
+	///////////////
+	//PlayerStats//
+	//////////////
+	String playerClass;
+	int speed;
+	int health;
+	int energy;
+	int attack;
+	int magicAttack;
+	int defence;
+	
 
-	Player(String n) {
+	Player(String n, String plc) {
 		super(n);
-		// TODO Auto-generated constructor stub
+		playerClass = plc;
+		playerClass();
+	}
+	
+	void playerClass(){
+		if (playerClass == "Warrior"){
+			health = 100;
+			energy = 100;
+			attack = 10;
+			magicAttack = 0;
+			defence = 5;
+		}else if(playerClass == "Priest"){
+			health = 100;
+			energy = 100;
+			attack = 0;
+			magicAttack = 10;
+			defence = 5;
+		}
+	}
+	
+	void render(Graphics g, GameContainer container){
+		g.setColor(Color.red);
+		g.fillRect(sxpos , sypos - 20, 32, 5);
+		g.setColor(Color.green);
+		g.fillRect(sxpos , sypos - 20, (health / 100) *32, 5);
+		g.drawImage(playerImage, sxpos, sypos);
 	}
 
 

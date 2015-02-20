@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -8,8 +9,8 @@ public class Player1 extends Player {
 	String direction;
 	String moveThisWay;
 
-	Player1(String n, int x, int y) {
-		super(n);
+	Player1(String n, String plc, int x, int y) {
+		super(n, plc);
 		vxpos = x;
 		vypos = y;
 		init();
@@ -39,12 +40,14 @@ public class Player1 extends Player {
 	}
 	
 	void render(Graphics g, GameContainer container){
+		g.setColor(Color.red);
+		g.fillRect(sxpos , sypos - 20, 32, 5);
+		g.setColor(Color.green);
+		g.fillRect(sxpos , sypos - 20, (health / 100) *32, 5);
 		g.drawImage(playerImage, sxpos, sypos);
 	}
 	
 	void update(){
-		
-		
 		
 		gridXpos = (int) (vxpos / 32);
 		gridYpos = (int) (vypos / 32);
@@ -52,8 +55,6 @@ public class Player1 extends Player {
 		gridXpos = (int) (vxpos / 32);
 		gridYpos = (int) (vypos / 32);
 		collision();
-		
-		
 		
 	}
 	
@@ -69,7 +70,9 @@ public class Player1 extends Player {
 				sxpos += speed;
 			}else{
 				ProjectTrinity.screenOffsetX += speed;
-				ProjectTrinity.player2.sxpos -=speed;
+				if(ProjectTrinity.currentMap.playerCount == 2){
+				ProjectTrinity.currentMap.player2.sxpos -=speed;
+				}
 			}
 
 		}
@@ -81,7 +84,9 @@ public class Player1 extends Player {
 				sxpos -= speed;
 			}else{
 				ProjectTrinity.screenOffsetX -= speed;
-				ProjectTrinity.player2.sxpos +=speed;
+				if(ProjectTrinity.currentMap.playerCount == 2){
+				ProjectTrinity.currentMap.player2.sxpos +=speed;
+				}
 			}
 
 		}
@@ -93,7 +98,9 @@ public class Player1 extends Player {
 				sypos -= speed;
 			}else{
 				ProjectTrinity.screenOffsetY -= speed;
-				ProjectTrinity.player2.sypos +=speed;
+				if(ProjectTrinity.currentMap.playerCount == 2){
+				ProjectTrinity.currentMap.player2.sypos +=speed;
+				}
 			}
 
 		}
@@ -106,7 +113,9 @@ public class Player1 extends Player {
 				sypos += speed;
 			}else{
 				ProjectTrinity.screenOffsetY += speed;
-				ProjectTrinity.player2.sypos -=speed;
+				if(ProjectTrinity.currentMap.playerCount == 2){
+				ProjectTrinity.currentMap.player2.sypos -=speed;
+				}
 			}
 
 		}
@@ -149,11 +158,11 @@ public class Player1 extends Player {
 				}
 			}
 		}
-		
-		if((vxpos + 28) >= (ProjectTrinity.player2.vxpos)  &&
-				(vxpos) <= (ProjectTrinity.player2.vxpos) +  28 &&
-				(vypos + 28) >= (ProjectTrinity.player2.vypos)  &&
-				(vypos) <= (ProjectTrinity.player2.vypos) + 28  ){
+		if(ProjectTrinity.currentMap.playerCount == 2){
+		if((vxpos + 28) >= (ProjectTrinity.currentMap.player2.vxpos)  &&
+				(vxpos) <= (ProjectTrinity.currentMap.player2.vxpos) +  28 &&
+				(vypos + 28) >= (ProjectTrinity.currentMap.player2.vypos)  &&
+				(vypos) <= (ProjectTrinity.currentMap.player2.vypos) + 28  ){
 			if (direction == "right"){//right
 				vxpos -=speed;
 				sxpos -= speed;
@@ -171,6 +180,7 @@ public class Player1 extends Player {
 				sypos -= speed;
 
 			}
+		}
 			
 		}
 		

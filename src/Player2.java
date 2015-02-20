@@ -1,3 +1,4 @@
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -8,8 +9,8 @@ public class Player2 extends Player {
 	String direction;
 	String moveThisWay;
 
-	Player2(String n, int x, int y) {
-		super(n);
+	Player2(String n, String plc,  int x, int y) {
+		super(n, plc);
 		vxpos = x + 32;
 		vypos = y + 32;
 		init();
@@ -37,6 +38,10 @@ public class Player2 extends Player {
 	}
 	
 	void render(Graphics g, GameContainer container){
+		g.setColor(Color.red);
+		g.fillRect(sxpos , sypos - 20, 32, 5);
+		g.setColor(Color.green);
+		g.fillRect(sxpos , sypos - 20, (health / 100) *32, 5);
 		g.drawImage(playerImage, sxpos, sypos);
 	}
 	
@@ -125,10 +130,10 @@ public class Player2 extends Player {
 				}
 			}
 		}
-		if((vxpos + 28) >= (ProjectTrinity.player1.vxpos)  &&
-				(vxpos) <= (ProjectTrinity.player1.vxpos) +  28 &&
-				(vypos + 28) >= (ProjectTrinity.player1.vypos)  &&
-				(vypos) <= (ProjectTrinity.player1.vypos) + 28  ){
+		if((vxpos + 28) >= (ProjectTrinity.currentMap.player1.vxpos)  &&
+				(vxpos) <= (ProjectTrinity.currentMap.player1.vxpos) +  28 &&
+				(vypos + 28) >= (ProjectTrinity.currentMap.player1.vypos)  &&
+				(vypos) <= (ProjectTrinity.currentMap.player1.vypos) + 28  ){
 			if (direction == "right"){//right
 				vxpos -=speed;
 				sxpos -= speed;
