@@ -47,7 +47,7 @@ public class Map {
 			player1 = new Player1("Player 1", "Warrior",  mapSpawnX, mapSpawnY);
 			player2 = new Player2("Player 2","Priest",  mapSpawnX, mapSpawnY);
 		}
-		
+		 
 		
 	}
 	

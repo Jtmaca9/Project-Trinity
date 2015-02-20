@@ -1,8 +1,9 @@
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
-
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -15,35 +16,34 @@ import org.newdawn.slick.SlickException;
 
 public class ProjectTrinity extends BasicGame {
 
-	 
-	 static float screenOffsetX;
-	 static float screenOffsetY;
-	 float screenOffsetScale;
-	 
-	 String gameState;
-	 static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-	 static double width = screenSize.getWidth();
-	 static double height = screenSize.getHeight();
-	 static int tileX;
-	 static int tileY;
-	 
-	 static Map currentMap;
-	 
-	 MainMenu mainMenu;
-	 
-	 static Image grassTile;
-	 static Image waterTile;
-	 Image title;
-	 Image startGame;
-	 Image mapEditor;
-	 Image selectionArrow;
-	 
-	 int mouseXpos;
-	 int mouseYpos;
-	 
-	 int menuSelection = 1;
+	static float screenOffsetX;
+	static float screenOffsetY;
+	float screenOffsetScale;
 
+	String gameState;
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	static double width = screenSize.getWidth();
+	static double height = screenSize.getHeight();
+	static int tileX;
+	static int tileY;
 
+	static Map currentMap;
+
+	MainMenu mainMenu;
+
+	int mapNumber;
+	static String[] maps;
+	Scanner scanner;
+
+	static Image grassTile;
+	static Image waterTile;
+	Image title;
+	Image startGame;
+	Image mapEditor;
+	Image selectionArrow;
+
+	int mouseXpos;
+	int mouseYpos;
 
 	public ProjectTrinity() {
 		// Set the application window name
@@ -51,16 +51,14 @@ public class ProjectTrinity extends BasicGame {
 	}
 
 	public static void main(String[] arguments) {
-		
-		
+
 		try {
 			// Set up the screen and graphic options
 			AppGameContainer app = new AppGameContainer(new ProjectTrinity());
-			app.setDisplayMode((int)width, (int)height, true);
+			app.setDisplayMode((int) width, (int) height, true);
 			app.setShowFPS(true);
 			app.setVSync(true);
 			app.start();
-			
 
 		} catch (SlickException e) {
 			e.printStackTrace();
@@ -69,10 +67,11 @@ public class ProjectTrinity extends BasicGame {
 
 	@Override
 	public void init(GameContainer container) throws SlickException {
-		tileX = (int) (width/32);
-		tileY = (int) (height/32);
+		loadMaps();
+		tileX = (int) (width / 32);
+		tileY = (int) (height / 32);
 		gameState = "mainmenu";
-		mainMenu = new MainMenu(1, width, height);
+		mainMenu = new MainMenu(mapNumber, width, height);
 		loadImages();
 
 	}
@@ -80,172 +79,221 @@ public class ProjectTrinity extends BasicGame {
 	@Override
 	public void update(GameContainer container, int delta)
 			throws SlickException {
-		
-		if(gameState == "game"){
-		currentMap.update();
-		}
-		
-		else if(gameState == "mainmenu"){
+
+		if (gameState == "game") {
+			currentMap.update();
 		}
 
+		else if (gameState == "mainmenu") {
+		}
 
 	}
 
 	public void render(GameContainer container, Graphics g)
 			throws SlickException {
-		
-		
-		//////////////////
-		//Draw Main Menu//
-		/////////////////
-		if(gameState == "mainmenu"){
+
+		// ////////////////
+		// Draw Main Menu//
+		// ///////////////
+		if (gameState == "mainmenu") {
 			mainMenu.render(g, container);
 		}
-		
-		
-		
-		/////////////
-		//Draw Game//
-		////////////
-		else if(gameState == "game"){
-		g.setColor(Color.black);
-		g.fillRect((float)0, (float)0, (float)width,(float) height);
-		currentMap.render(g, container);
-		g.setColor(Color.white);
-		g.drawString("Player 1: (" + currentMap.player1.get_vxpos() + ", " + currentMap.player1.get_vypos() + ")" + " (" + currentMap.player1.get_gridXpos() + ", " +currentMap. player1.get_gridYpos() + ")", 20, 200);
-		if(currentMap.playerCount == 2){
-		g.drawString("Player 2: (" + currentMap.player2.get_vxpos() + ", " + currentMap.player2.get_vypos() + ")" + " (" + currentMap.player2.get_gridXpos() + ", " + currentMap.player2.get_gridYpos() + ")", 20, 400);
+
+		// ///////////
+		// Draw Game//
+		// //////////
+		else if (gameState == "game") {
+			g.setColor(Color.black);
+			g.fillRect((float) 0, (float) 0, (float) width, (float) height);
+			currentMap.render(g, container);
+			g.setColor(Color.white);
+			g.drawString("Player 1: (" + currentMap.player1.get_vxpos() + ", "
+					+ currentMap.player1.get_vypos() + ")" + " ("
+					+ currentMap.player1.get_gridXpos() + ", "
+					+ currentMap.player1.get_gridYpos() + ")", 20, 200);
+			if (currentMap.playerCount == 2) {
+				g.drawString("Player 2: (" + currentMap.player2.get_vxpos()
+						+ ", " + currentMap.player2.get_vypos() + ")" + " ("
+						+ currentMap.player2.get_gridXpos() + ", "
+						+ currentMap.player2.get_gridYpos() + ")", 20, 400);
+			}
 		}
-		}
-		
-		
-		///////////////////
-		//Draw Map Editor//
-		//////////////////
-		else if(gameState == "mapeditor"){
-			
+
+		// /////////////////
+		// Draw Map Editor//
+		// ////////////////
+		else if (gameState == "mapeditor") {
+
 		}
 
 	}
 
 	public void keyPressed(int key, char c) {
-		if(gameState == "game"){
+		if (gameState == "game") {
 
-		if (key == Input.KEY_D) {
-			currentMap.player1.set_moveRight(true);
-		}
+			if (key == Input.KEY_D) {
+				currentMap.player1.set_moveRight(true);
+			}
 
-		if (key == Input.KEY_A) {
-			currentMap.player1.set_moveLeft(true);
-		}
+			if (key == Input.KEY_A) {
+				currentMap.player1.set_moveLeft(true);
+			}
 
-		if (key == Input.KEY_W) {
-			currentMap.player1.set_moveUp(true);
-		}
+			if (key == Input.KEY_W) {
+				currentMap.player1.set_moveUp(true);
+			}
 
-		if (key == Input.KEY_S) {
-			currentMap.player1.set_moveDown(true);
-		}
-		if(currentMap.playerCount == 2){
-		if (key == Input.KEY_RIGHT) {
-			currentMap.player2.set_moveRight(true);
-		}
+			if (key == Input.KEY_S) {
+				currentMap.player1.set_moveDown(true);
+			}
+			if (currentMap.playerCount == 2) {
+				if (key == Input.KEY_RIGHT) {
+					currentMap.player2.set_moveRight(true);
+				}
 
-		if (key == Input.KEY_LEFT) {
-			currentMap.player2.set_moveLeft(true);
-		}
+				if (key == Input.KEY_LEFT) {
+					currentMap.player2.set_moveLeft(true);
+				}
 
-		if (key == Input.KEY_UP) {
-			currentMap.player2.set_moveUp(true);
-		}
+				if (key == Input.KEY_UP) {
+					currentMap.player2.set_moveUp(true);
+				}
 
-		if (key == Input.KEY_DOWN) {
-			currentMap.player2.set_moveDown(true);
-		}
-		}
+				if (key == Input.KEY_DOWN) {
+					currentMap.player2.set_moveDown(true);
+				}
+			}
+
+		} else if (gameState == "mainmenu") {
+
+			if (key == Input.KEY_UP || key == Input.KEY_W) {
+				if (mainMenu.screen == "main") {
+					if (mainMenu.menuSelection == 0) {
+						mainMenu.menuSelection += 1;
+					} else {
+						mainMenu.menuSelection = 0;
+					}
+				} else if (mainMenu.screen == "levelSelect") {
+					if (mainMenu.menuSelection > 0) {
+						mainMenu.menuSelection--;
+					}
+				}
+			} else if (key == Input.KEY_DOWN || key == Input.KEY_S) {
+				if (mainMenu.screen == "main") {
+					if (mainMenu.menuSelection == 0) {
+						mainMenu.menuSelection = 1;
+					} else {
+						mainMenu.menuSelection = 0;
+					}
+				} else if (mainMenu.screen == "levelSelect") {
+					if (mainMenu.menuSelection < (maps.length -1)) {
+						mainMenu.menuSelection++;
+					}
+
+				}
+			}
+
+				if (key == Input.KEY_ENTER) {
+					if (mainMenu.screen == "main") {
+						if (mainMenu.menuSelection == 0) {
+							mainMenu.screen = "levelSelect";
+						} else if (mainMenu.menuSelection == 1) {
+							gameState = "mapeditor";
+						}
+					} else if (mainMenu.screen == "levelSelect") {
+						screenOffsetX = 0;
+						screenOffsetY = 0;
+						currentMap = new Map(maps[mainMenu.menuSelection], "Survival", 2);
+						gameState = "game";
+					}
+
+				}
+			}
 		
-		}else if(gameState == "mainmenu"){
-			
-			if (key == Input.KEY_UP || key == Input.KEY_DOWN || key == Input.KEY_W || key == Input.KEY_S) {
-				if(mainMenu.menuSelection == 1){
-					mainMenu.menuSelection = 2;
-				}else{
-					mainMenu.menuSelection = 1;
-				}
-			}
-			
-			if (key == Input.KEY_ENTER) {
-				if(mainMenu.menuSelection == 1){
-					screenOffsetX = 0;
-					screenOffsetY = 0;
-					currentMap = new Map("test", "Survival", 2);
-					gameState = "game";
-				}else{
-					gameState = "mapeditor";
-				}
-			}
-		}
-
 
 		if (key == Input.KEY_ESCAPE) {
-			if(gameState == "game" || gameState == "mapeditor"){
+			if (gameState == "game" || gameState == "mapeditor") {
 				gameState = "mainmenu";
+			} else if(mainMenu.screen != "main") {
+				mainMenu.screen = "main";
+				mainMenu.menuSelection = 0;
 			}else{
-			System.exit(0);
+				System.exit(0);
+			}
+			}
+		}
+
+
+	public void keyReleased(int key, char c) {
+		if (gameState == "game") {
+			if (key == Input.KEY_D) {
+				currentMap.player1.set_moveRight(false);
+
+			}
+
+			if (key == Input.KEY_A) {
+				currentMap.player1.set_moveLeft(false);
+
+			}
+
+			if (key == Input.KEY_W) {
+				currentMap.player1.set_moveUp(false);
+
+			}
+
+			if (key == Input.KEY_S) {
+				currentMap.player1.set_moveDown(false);
+
+			}
+			if (currentMap.playerCount == 2) {
+				if (key == Input.KEY_RIGHT) {
+					currentMap.player2.set_moveRight(false);
+
+				}
+
+				if (key == Input.KEY_LEFT) {
+					currentMap.player2.set_moveLeft(false);
+
+				}
+
+				if (key == Input.KEY_UP) {
+					currentMap.player2.set_moveUp(false);
+
+				}
+
+				if (key == Input.KEY_DOWN) {
+					currentMap.player2.set_moveDown(false);
+
+				}
 			}
 		}
 
 	}
 
-	public void keyReleased(int key, char c) {
-		if(gameState == "game"){
-		if (key == Input.KEY_D) {
-			currentMap.player1.set_moveRight(false);
+	void loadMaps() {
 
+		try {
+			scanner = new Scanner(new File("Data/Maps/MapConfig.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		if (key == Input.KEY_A) {
-			currentMap.player1.set_moveLeft(false);
+		int p = 0;
+		int a = 0;
 
+		while (scanner.hasNext()) {
+			if (a == 0) {
+				mapNumber = scanner.nextInt();
+				maps = new String[mapNumber];
+				a++;
+			}
+
+			maps[p++] = scanner.next();
 		}
-
-		if (key == Input.KEY_W) {
-			currentMap.player1.set_moveUp(false);
-
-		}
-
-		if (key == Input.KEY_S) {
-			currentMap.player1.set_moveDown(false);
-
-		}
-		if(currentMap.playerCount == 2){
-		if (key == Input.KEY_RIGHT) {
-			currentMap.player2.set_moveRight(false);
-
-		}
-
-		if (key == Input.KEY_LEFT) {
-			currentMap.player2.set_moveLeft(false);
-
-		}
-
-		if (key == Input.KEY_UP) {
-			currentMap.player2.set_moveUp(false);
-
-		}
-
-		if (key == Input.KEY_DOWN) {
-			currentMap.player2.set_moveDown(false);
-
-		}
-		}
-		}
-
-
-
 	}
-	
-	void loadImages(){
+
+	void loadImages() {
 		try {
 			grassTile = new Image("Data/Images/Grass.png");
 		} catch (SlickException e) {
@@ -259,6 +307,5 @@ public class ProjectTrinity extends BasicGame {
 			e.printStackTrace();
 		}
 	}
-	
 
 }

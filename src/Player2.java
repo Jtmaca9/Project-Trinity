@@ -99,7 +99,7 @@ public class Player2 extends Player {
 	void collision(){
 		for(int i = gridXpos - 2; i < gridXpos + 2;  i++){
 			for(int j = gridYpos - 2; j < gridYpos + 2; j++){
-				if(i > 0 && j > 0 && i < ProjectTrinity.currentMap.mapWidth && j < ProjectTrinity.currentMap.mapHeight){
+				if(i >= 0 && j >= 0 && i < ProjectTrinity.currentMap.mapWidth && j < ProjectTrinity.currentMap.mapHeight){
 					if((vxpos + 28) >= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32)  &&
 							(vxpos) <= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32) +  28 &&
 							(vypos + 28) >= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32)  &&
