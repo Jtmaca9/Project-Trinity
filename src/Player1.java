@@ -8,13 +8,13 @@ import org.newdawn.slick.SlickException;
 public class Player1 extends Player {
 	String direction;
 	String moveThisWay;
+	Ability activeAbility;
 
 	Player1(String n, String plc, int x, int y) {
 		super(n, plc);
 		vxpos = x;
 		vypos = y;
 		init();
-		// TODO Auto-generated constructor stub
 	}
 
 	
@@ -45,6 +45,9 @@ public class Player1 extends Player {
 		g.setColor(Color.green);
 		g.fillRect(sxpos , sypos - 20, (health / 100) *32, 5);
 		g.drawImage(playerImage, sxpos, sypos);
+		if(activeAb){
+			activeAbility.render(g, container);
+		}
 	}
 	
 	void update(){
@@ -55,7 +58,9 @@ public class Player1 extends Player {
 		gridXpos = (int) (vxpos / 32);
 		gridYpos = (int) (vypos / 32);
 		collision();
-		
+		if(activeAb){
+			activeAbility.update();
+		}
 	}
 	
 	void move(){
@@ -204,6 +209,19 @@ public class Player1 extends Player {
 			}
 			
 		}
+	}
+	
+	void ability1(String a){
+			activeAb = true;
+			if(direction == "right"){
+				activeAbility = new Ability(a, a, direction, vxpos + 32, vypos + 8, sxpos + 32, sypos + 8);
+			}else if(direction == "left"){
+				activeAbility = new Ability(a, a, direction, vxpos - 16, vypos + 8, sxpos -16, sypos + 8);
+			}else if(direction == "down"){
+				activeAbility = new Ability(a, a, direction, vxpos + 8, vypos + 32, sxpos + 8, sypos + 32);
+			}else if(direction == "up"){
+				activeAbility = new Ability(a, a, direction, vxpos + 8, vypos - 16, sxpos + 8, sypos -16);
+			}
 	}
 }
 

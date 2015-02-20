@@ -9,9 +9,12 @@ public class Player extends Entity {
 	boolean moveLeft = false;
 	boolean moveUp = false;
 	boolean moveDown = false;
+	boolean activeAb = false;
 
 	String movementQueue[];
 	String noMove;
+	
+	String ability1;
 
 	int size = 32;
 	Image playerImage;
@@ -41,14 +44,18 @@ public class Player extends Entity {
 			attack = 10;
 			magicAttack = 0;
 			defence = 5;
+			ability1 = "healProjectile";
 		}else if(playerClass == "Priest"){
 			health = 100;
 			energy = 100;
 			attack = 0;
 			magicAttack = 10;
 			defence = 5;
+			ability1 = "healProjectile";
 		}
 	}
+	
+	
 	
 	void render(Graphics g, GameContainer container){
 		g.setColor(Color.red);

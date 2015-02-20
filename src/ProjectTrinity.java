@@ -37,10 +37,12 @@ public class ProjectTrinity extends BasicGame {
 
 	static Image grassTile;
 	static Image waterTile;
+	static Image healProjectileImage;
 	Image title;
 	Image startGame;
 	Image mapEditor;
 	Image selectionArrow;
+	
 
 	int mouseXpos;
 	int mouseYpos;
@@ -145,6 +147,9 @@ public class ProjectTrinity extends BasicGame {
 
 			if (key == Input.KEY_S) {
 				currentMap.player1.set_moveDown(true);
+			}
+			if (key == Input.KEY_SPACE) {
+				currentMap.player1.ability1(currentMap.player1.ability1);
 			}
 			if (currentMap.playerCount == 2) {
 				if (key == Input.KEY_RIGHT) {
@@ -297,13 +302,16 @@ public class ProjectTrinity extends BasicGame {
 		try {
 			grassTile = new Image("Data/Images/Grass.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			waterTile = new Image("Data/Images/Water.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			healProjectileImage = new Image("Data/Images/HealPuff.png");
+		} catch (SlickException e) {
 			e.printStackTrace();
 		}
 	}
