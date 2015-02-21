@@ -154,7 +154,7 @@ public class Player2 extends Player {
 			
 		}
 		
-		if(vxpos < 0 || (vxpos - 28) >= ProjectTrinity.currentMap.mapWidthPx || vypos < 0 || (vypos - 28) >= ProjectTrinity.currentMap.mapHeightPx ){
+		if(vxpos < 0 || (vxpos + 28) >= ProjectTrinity.currentMap.mapWidthPx || vypos < 0 || (vypos + 28) >= ProjectTrinity.currentMap.mapHeightPx ){
 			if (direction == "right"){//right
 				vxpos -=speed;
 				sxpos -= speed;

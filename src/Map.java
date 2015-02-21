@@ -38,8 +38,8 @@ public class Map {
 	void init(){
 		loadMapInfo();
 		loadMap();
-		mapWidthPx = mapWidth *32;
-		mapHeightPx = mapHeight *32;
+		mapWidthPx = (mapWidth ) *32;
+		mapHeightPx = (mapHeight ) *32;
 		if (playerCount == 1){
 			player1 = new Player1("Player 1","Warrior", mapSpawnX, mapSpawnY);
 		}
