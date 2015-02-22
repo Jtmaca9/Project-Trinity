@@ -27,6 +27,8 @@ public class ProjectTrinity extends BasicGame {
 	static int tileX;
 	static int tileY;
 
+	boolean debugMode = false;
+
 	static Map currentMap;
 
 	MainMenu mainMenu;
@@ -38,11 +40,14 @@ public class ProjectTrinity extends BasicGame {
 	static Image grassTile;
 	static Image waterTile;
 	static Image healProjectileImage;
+	static Image damageProjectileImage;
+	static Image healProjectileIcon;
+	static Image damageProjectileIcon;
+	static Image abilityCooldown;
 	Image title;
 	Image startGame;
 	Image mapEditor;
 	Image selectionArrow;
-	
 
 	int mouseXpos;
 	int mouseYpos;
@@ -109,15 +114,23 @@ public class ProjectTrinity extends BasicGame {
 			g.fillRect((float) 0, (float) 0, (float) width, (float) height);
 			currentMap.render(g, container);
 			g.setColor(Color.white);
-			g.drawString("Player 1: (" + currentMap.player1.get_vxpos() + ", "
-					+ currentMap.player1.get_vypos() + ")" + " ("
-					+ currentMap.player1.get_gridXpos() + ", "
-					+ currentMap.player1.get_gridYpos() + ")", 20, 200);
-			if (currentMap.playerCount == 2) {
-				g.drawString("Player 2: (" + currentMap.player2.get_vxpos()
-						+ ", " + currentMap.player2.get_vypos() + ")" + " ("
-						+ currentMap.player2.get_gridXpos() + ", "
-						+ currentMap.player2.get_gridYpos() + ")", 20, 400);
+
+			// ////////////
+			// Debug Menu//
+			// ///////////
+			if (debugMode) {
+				g.drawString("Player 1: (" + currentMap.player1.get_vxpos()
+						+ ", " + currentMap.player1.get_vypos() + ")" + " ("
+						+ currentMap.player1.get_gridXpos() + ", "
+						+ currentMap.player1.get_gridYpos() + ")", 20, 200);
+				if (currentMap.playerCount == 2) {
+					g.drawString("Player 2: (" + currentMap.player2.get_vxpos()
+							+ ", " + currentMap.player2.get_vypos() + ")"
+							+ " (" + currentMap.player2.get_gridXpos() + ", "
+							+ currentMap.player2.get_gridYpos() + ")", 20, 400);
+					g.drawString("Offset(" + screenOffsetX + ","
+							+ screenOffsetY + ")", 20, 600);
+				}
 			}
 		}
 
@@ -148,8 +161,24 @@ public class ProjectTrinity extends BasicGame {
 			if (key == Input.KEY_S) {
 				currentMap.player1.set_moveDown(true);
 			}
-			if (key == Input.KEY_SPACE) {
-				currentMap.player1.ability1(currentMap.player1.ability1);
+			if (key == Input.KEY_T) {
+				currentMap.player1.ability(currentMap.player1.ability1);
+			}
+			if (key == Input.KEY_Y) {
+				currentMap.player1.ability(currentMap.player1.ability2);
+			}
+			if (key == Input.KEY_NUMPAD0) {
+				currentMap.player2.ability(currentMap.player2.ability1);
+			}
+			if (key == Input.KEY_NUMPAD1) {
+				currentMap.player2.ability(currentMap.player2.ability2);
+			}
+			if (key == Input.KEY_COMMA) {
+				if (debugMode) {
+					debugMode = false;
+				} else {
+					debugMode = true;
+				}
 			}
 			if (currentMap.playerCount == 2) {
 				if (key == Input.KEY_RIGHT) {
@@ -191,43 +220,42 @@ public class ProjectTrinity extends BasicGame {
 						mainMenu.menuSelection = 0;
 					}
 				} else if (mainMenu.screen == "levelSelect") {
-					if (mainMenu.menuSelection < (maps.length -1)) {
+					if (mainMenu.menuSelection < (maps.length - 1)) {
 						mainMenu.menuSelection++;
 					}
 
 				}
 			}
 
-				if (key == Input.KEY_ENTER) {
-					if (mainMenu.screen == "main") {
-						if (mainMenu.menuSelection == 0) {
-							mainMenu.screen = "levelSelect";
-						} else if (mainMenu.menuSelection == 1) {
-							gameState = "mapeditor";
-						}
-					} else if (mainMenu.screen == "levelSelect") {
-						screenOffsetX = 0;
-						screenOffsetY = 0;
-						currentMap = new Map(maps[mainMenu.menuSelection], "Survival", 2);
-						gameState = "game";
+			if (key == Input.KEY_ENTER) {
+				if (mainMenu.screen == "main") {
+					if (mainMenu.menuSelection == 0) {
+						mainMenu.screen = "levelSelect";
+					} else if (mainMenu.menuSelection == 1) {
+						gameState = "mapeditor";
 					}
-
+				} else if (mainMenu.screen == "levelSelect") {
+					screenOffsetX = 0;
+					screenOffsetY = 0;
+					currentMap = new Map(maps[mainMenu.menuSelection],
+							"Survival", 2);
+					gameState = "game";
 				}
+
 			}
-		
+		}
 
 		if (key == Input.KEY_ESCAPE) {
 			if (gameState == "game" || gameState == "mapeditor") {
 				gameState = "mainmenu";
-			} else if(mainMenu.screen != "main") {
+			} else if (mainMenu.screen != "main") {
 				mainMenu.screen = "main";
 				mainMenu.menuSelection = 0;
-			}else{
+			} else {
 				System.exit(0);
 			}
-			}
 		}
-
+	}
 
 	public void keyReleased(int key, char c) {
 		if (gameState == "game") {
@@ -311,6 +339,28 @@ public class ProjectTrinity extends BasicGame {
 		}
 		try {
 			healProjectileImage = new Image("Data/Images/HealPuff.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		try {
+			damageProjectileImage = new Image(
+					"Data/Images/damageProjectile.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		try {
+			healProjectileIcon = new Image("Data/Images/healProjectileIcon.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		try {
+			damageProjectileIcon = new Image(
+					"Data/Images/damageProjectileIcon.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		try {
+			abilityCooldown = new Image("Data/Images/abilityCooldown.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

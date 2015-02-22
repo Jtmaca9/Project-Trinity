@@ -29,25 +29,21 @@ public class MainMenu {
 		try {
 			title = new Image("Data/Images/Title.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			startGame = new Image("Data/Images/StartGame.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			mapEditor = new Image("Data/Images/MapEditor.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
 			selectionArrow = new Image("Data/Images/SelectionArrow.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
