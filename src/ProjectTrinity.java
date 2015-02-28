@@ -170,14 +170,13 @@ public class ProjectTrinity extends BasicGame {
 			if (key == Input.KEY_Y) {
 				currentMap.player1.ability(currentMap.player1.ability2);
 			}
-<<<<<<< HEAD
+
 			if (key == Input.KEY_SPACE) {
 				currentMap.enemies[0].findNewPath();
 			}
 			if (key == Input.KEY_NUMPAD0) {
-=======
+
 			if (key == Input.KEY_K) {
->>>>>>> origin/master
 				currentMap.player2.ability(currentMap.player2.ability1);
 			}
 			if (key == Input.KEY_L) {
@@ -264,6 +263,7 @@ public class ProjectTrinity extends BasicGame {
 			} else {
 				System.exit(0);
 			}
+		}
 		}
 	}
 
