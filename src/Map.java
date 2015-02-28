@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
@@ -22,10 +23,13 @@ public class Map {
 	int[][] tileData;
 	int[] mapInfo;
 	
-	Tile[][] tiles;
+	public static Tile[][] tiles;
 	
-	Player1 player1;
-	Player2 player2;
+	static Player1 player1;
+	static Player2 player2;
+	
+	Enemy[] enemies;
+	int activeEnemyCount;
 	
 	GUI gui;
 	
@@ -39,8 +43,10 @@ public class Map {
 	void init(){
 		loadMapInfo();
 		loadMap();
+		
 		mapWidthPx = (mapWidth ) *32;
 		mapHeightPx = (mapHeight ) *32;
+	
 		if (playerCount == 1){
 			player1 = new Player1("player1","Warrior", mapSpawnX, mapSpawnY);
 		}
@@ -50,6 +56,20 @@ public class Map {
 		}
 		
 		gui = new GUI(playerCount);
+		//enemies//
+		activeEnemyCount = 1;
+		enemies = new Enemy[activeEnemyCount];
+		for(int i = 0; i < activeEnemyCount; i++){
+			enemies[i] = new Enemy("null", "null", 0, 0, mapWidth, mapHeight);
+		}
+		
+		if (gameMode == "test"){
+			enemies[0] = new Enemy("monster", "monster", (32 * 5),( 32 * 5), mapWidth, mapHeight);
+			
+		}
+		
+		
+		//player2Path = new PathFinder(mapWidth, mapHeight, "player2");
 		 
 		
 	}
@@ -64,6 +84,12 @@ public class Map {
 		player1.update();	
 		player2.update();
 		
+		}
+		
+		
+		for(int i = 0; i < activeEnemyCount; i++){
+		 
+			enemies[i].update();
 		}
 	}
 	
@@ -127,6 +153,7 @@ public class Map {
 			for(int j =  player1.gridYpos - (ProjectTrinity.tileY); j < player1.gridYpos + (ProjectTrinity.tileY); j++){
 				if(i >= 0 && i < mapWidth && j >= 0 && j < mapHeight)
 				tiles[i][j].render(g, container);
+				
 			}
 		}
 		
@@ -135,6 +162,10 @@ public class Map {
 		}else if (playerCount == 2){
 		player1.render(g, container);
 		player2.render(g, container);
+		}
+		
+		for(int k = 0; k < activeEnemyCount; k++){
+			enemies[k].render(g, container);
 		}
 		
 		gui.render(g, container);

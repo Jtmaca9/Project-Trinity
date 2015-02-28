@@ -35,6 +35,9 @@ public class Tile {
 		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
 		g.drawImage(ProjectTrinity.waterTile, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
 		}
+		if(ProjectTrinity.debugMode){
+			g.drawString("."+ ProjectTrinity.currentMap.enemies[0].pathFinder.nodes[xpos][ypos].value, (xpos * sizeX) - ProjectTrinity.screenOffsetX, (ypos * sizeY) - ProjectTrinity.screenOffsetY);
+		}
 	}
 	
 

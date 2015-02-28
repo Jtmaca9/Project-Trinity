@@ -27,7 +27,7 @@ public class ProjectTrinity extends BasicGame {
 	static int tileX;
 	static int tileY;
 
-	boolean debugMode = false;
+	static boolean debugMode = false;
 
 	static Map currentMap;
 
@@ -44,6 +44,8 @@ public class ProjectTrinity extends BasicGame {
 	static Image healProjectileIcon;
 	static Image damageProjectileIcon;
 	static Image abilityCooldown;
+	static Image monsterImage;
+	
 	Image title;
 	Image startGame;
 	Image mapEditor;
@@ -75,6 +77,7 @@ public class ProjectTrinity extends BasicGame {
 	@Override
 	public void init(GameContainer container) throws SlickException {
 		loadMaps();
+		
 		tileX = (int) (width / 32);
 		tileY = (int) (height / 32);
 		gameState = "mainmenu";
@@ -167,6 +170,9 @@ public class ProjectTrinity extends BasicGame {
 			if (key == Input.KEY_Y) {
 				currentMap.player1.ability(currentMap.player1.ability2);
 			}
+			if (key == Input.KEY_SPACE) {
+				currentMap.enemies[0].findNewPath();
+			}
 			if (key == Input.KEY_NUMPAD0) {
 				currentMap.player2.ability(currentMap.player2.ability1);
 			}
@@ -238,7 +244,7 @@ public class ProjectTrinity extends BasicGame {
 					screenOffsetX = 0;
 					screenOffsetY = 0;
 					currentMap = new Map(maps[mainMenu.menuSelection],
-							"Survival", 2);
+							"test", 2);
 					gameState = "game";
 				}
 
@@ -338,7 +344,7 @@ public class ProjectTrinity extends BasicGame {
 			e.printStackTrace();
 		}
 		try {
-			healProjectileImage = new Image("Data/Images/HealPuff.png");
+			healProjectileImage = new Image("Data/Images/healProjectile.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -361,6 +367,11 @@ public class ProjectTrinity extends BasicGame {
 		}
 		try {
 			abilityCooldown = new Image("Data/Images/abilityCooldown.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		try {
+			monsterImage = new Image("Data/Images/Monster.png");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}

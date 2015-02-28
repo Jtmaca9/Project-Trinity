@@ -41,13 +41,13 @@ public class Ability extends Entity {
 		if (type == "healProjectile") {
 			ability = ProjectTrinity.healProjectileImage;
 			size = 16;
-			speed = 6;
+			speed = 3;
 			healAmount = 10;
 			damageAmount = 0;
 		} else if (type == "damageProjectile") {
 			ability = ProjectTrinity.damageProjectileImage;
 			size = 16;
-			speed = 6;
+			speed = 10;
 			healAmount = 0;
 			damageAmount = -10;
 		}
@@ -109,10 +109,10 @@ public class Ability extends Entity {
 			for (int j = gridYpos - 5; j < gridYpos + 5; j++) {
 				if (i >= 0 && j >= 0 && i < ProjectTrinity.currentMap.mapWidth
 						&& j < ProjectTrinity.currentMap.mapHeight) {
-					if ((vxpos + 10) >= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32)
-							&& (vxpos) <= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32) + 26
-							&& (vypos + 10) >= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32)
-							&& (vypos) <= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32) + 26) {
+					if ((vxpos + (16 - speed)) >= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32)
+							&& (vxpos) <= (ProjectTrinity.currentMap.tiles[i][j].xpos * 32) + (32 - speed)
+							&& (vypos + (16 - speed)) >= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32)
+							&& (vypos) <= (ProjectTrinity.currentMap.tiles[i][j].ypos * 32) + (32 - speed)) {
 						if (ProjectTrinity.currentMap.tiles[i][j].block) {
 							type = "null";
 						}

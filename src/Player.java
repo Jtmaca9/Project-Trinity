@@ -109,8 +109,8 @@ public class Player extends Entity {
 		ability2CD = 0;
 		
 		//Initiate Damage and Heal Projectile costs and cooldowns
-		dhProjCD = 30;
-		dhProjCost = 20;
+		dhProjCD = 1;
+		dhProjCost = 1;
 	}
 
 	void playerClass() {

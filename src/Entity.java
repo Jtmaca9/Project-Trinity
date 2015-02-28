@@ -5,8 +5,8 @@ public class Entity {
 	int vypos;
 	int sxpos;
 	int sypos;
-	int gridXpos;
-	int gridYpos;
+	 int gridXpos;
+	 int gridYpos;
 	
 	Entity(String n){
 		name = n;
