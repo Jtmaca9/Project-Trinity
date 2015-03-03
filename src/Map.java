@@ -27,6 +27,7 @@ public class Map {
 	
 	static Player1 player1;
 	static Player2 player2;
+	MonsterSpawner monsterSpawner;
 	
 	Enemy[] enemies;
 	int activeEnemyCount;
@@ -56,25 +57,47 @@ public class Map {
 		}
 		
 		gui = new GUI(playerCount);
+		
+		
 		//enemies//
-		activeEnemyCount = 1;
-		enemies = new Enemy[activeEnemyCount];
-		for(int i = 0; i < activeEnemyCount; i++){
-			enemies[i] = new Enemy("null", "null", 0, 0, mapWidth, mapHeight);
-		}
+		
 		
 		if (gameMode == "test"){
-			enemies[0] = new Enemy("monster", "monster", (32 * 5),( 32 * 5), mapWidth, mapHeight);
-			
+			activeEnemyCount = 22;
+			enemies = new Enemy[activeEnemyCount];
+			for(int i = 0; i < activeEnemyCount; i++){
+				enemies[i] = new Enemy("null", "null", 0, 0, mapWidth, mapHeight, "null");
+			}
+			enemies[0] = new Enemy("goblin", "goblin", (32 * 6),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[1] = new Enemy("goblin", "goblin", (32 * 7),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[2] = new Enemy("goblin", "goblin", (32 * 45),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[4] = new Enemy("goblin", "goblin", (32 * 35),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[5] = new Enemy("goblin", "goblin", (32 * 6),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[6] = new Enemy("goblin", "goblin", (32 * 7),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[7] = new Enemy("goblin", "goblin", (32 * 45),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[8] = new Enemy("goblin", "goblin", (32 * 35),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[9] = new Enemy("goblin", "goblin", (32 * 6),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[10] = new Enemy("goblin", "goblin", (32 * 7),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[12] = new Enemy("goblin", "goblin", (32 * 45),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[13] = new Enemy("goblin", "goblin", (32 * 35),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[14] = new Enemy("goblin", "goblin", (32 * 6),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[15] = new Enemy("goblin", "goblin", (32 * 7),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[16] = new Enemy("goblin", "goblin", (32 * 45),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[17] = new Enemy("goblin", "goblin", (32 * 35),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[18] = new Enemy("goblin", "goblin", (32 * 6),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[19] = new Enemy("goblin", "goblin", (32 * 7),( 32 * 6), mapWidth, mapHeight, "player1");
+			enemies[20] = new Enemy("goblin", "goblin", (32 * 45),( 32 * 45), mapWidth, mapHeight, "player1");
+			enemies[21] = new Enemy("goblin", "goblin", (32 * 35),( 32 * 45), mapWidth, mapHeight, "player1");
+					
 		}
 		
-		
-		//player2Path = new PathFinder(mapWidth, mapHeight, "player2");
+		monsterSpawner = new MonsterSpawner("MonsterSpawner", (32 * 5),( 32 * 5), mapWidth, mapHeight);
 		 
 		
 	}
 	
 	void update(){
+		
 		if (playerCount == 1){
 			
 		player1.update();
@@ -85,12 +108,19 @@ public class Map {
 		player2.update();
 		
 		}
-		
+		monsterSpawner.update();
+		for(int i =  0; i <  mapWidth; i++){
+			for(int j = 0; j < mapHeight; j++){
+				tiles[i][j].update();		
+			}
+		}
 		
 		for(int i = 0; i < activeEnemyCount; i++){
 		 
 			enemies[i].update();
 		}
+		
+		
 	}
 	
 	void loadMapInfo(){
@@ -140,7 +170,7 @@ public class Map {
 				for(int j = 0; j < mapHeight; j++){
 					if(scanner.hasNextInt()){
 						tileData[j][i] = scanner.nextInt();
-						tiles[j][i] = new Tile(tileData[j][i], j, i);
+						tiles[j][i] = new Tile(tileData[j][i], j, i, mapWidth, mapHeight);
 					}
 				}
 			}
@@ -163,13 +193,24 @@ public class Map {
 		player1.render(g, container);
 		player2.render(g, container);
 		}
-		
+		monsterSpawner.render(g, container);
 		for(int k = 0; k < activeEnemyCount; k++){
 			enemies[k].render(g, container);
 		}
-		
+
 		gui.render(g, container);
 		
+	}
+	
+	public int getMapWidth(){
+		return mapWidth;
+	}
+	public int getMapHeight(){
+		return mapHeight;
+	}
+	
+	public Tile getTile(int x, int y){
+		return tiles[x][y];
 	}
 	
 	

@@ -1,7 +1,9 @@
 
 public class Node {
 	int xpos, ypos, value;
-	boolean closed, block;
+	int parentx, parenty;
+	String dir;
+	boolean closed, block, parent;
 	
 	
 	Node(int x, int y, int v, boolean c, boolean b){
@@ -10,6 +12,7 @@ public class Node {
 		value = v;
 		closed = c;
 		block = b;
+		parent = false;
 	}
 	
 	int getNodeValue(){

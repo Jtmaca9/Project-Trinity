@@ -45,6 +45,8 @@ public class ProjectTrinity extends BasicGame {
 	static Image damageProjectileIcon;
 	static Image abilityCooldown;
 	static Image monsterImage;
+	static Image arrow;
+	static Image monsterSpawnerImage;
 	
 	Image title;
 	Image startGame;
@@ -172,9 +174,10 @@ public class ProjectTrinity extends BasicGame {
 			}
 
 			if (key == Input.KEY_SPACE) {
-				currentMap.enemies[0].findNewPath();
+			
 			}
 			if (key == Input.KEY_NUMPAD0) {
+			}
 
 			if (key == Input.KEY_K) {
 				currentMap.player2.ability(currentMap.player2.ability1);
@@ -265,7 +268,7 @@ public class ProjectTrinity extends BasicGame {
 			}
 		}
 		}
-	}
+	
 
 	public void keyReleased(int key, char c) {
 		if (gameState == "game") {
@@ -379,6 +382,20 @@ public class ProjectTrinity extends BasicGame {
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
+		try {
+			arrow = new Image("Data/Images/Arrow.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+		try {
+			monsterSpawnerImage = new Image("Data/Images/MonsterSpawner.png");
+		} catch (SlickException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static Map getCurrentMap(){
+		return currentMap;
 	}
 
 }

@@ -154,7 +154,29 @@ public class Ability extends Entity {
 				ProjectTrinity.currentMap.player2.adjust_curHealth(damageAmount);
 			}
 		}
+		
+		for(int k = 0; k < ProjectTrinity.currentMap.activeEnemyCount; k ++){
+			if ((vxpos + 10) >= (ProjectTrinity.currentMap.enemies[k].vxpos)
+					&& (vxpos) <= (ProjectTrinity.currentMap.enemies[k].vxpos) + 28
+					&& (vypos + 10) >= (ProjectTrinity.currentMap.enemies[k].vypos)
+					&& (vypos) <= (ProjectTrinity.currentMap.enemies[k].vypos) + 28 && ProjectTrinity.currentMap.enemies[k].type != "null") {
+				type = "null";
+				ProjectTrinity.currentMap.enemies[k].adjust_curHealth(healAmount);
+				ProjectTrinity.currentMap.enemies[k].adjust_curHealth(damageAmount);
+			}
+		}
+		if ((vxpos + 10) >= (ProjectTrinity.currentMap.monsterSpawner.enemy.vxpos)
+				&& (vxpos) <= (ProjectTrinity.currentMap.monsterSpawner.enemy.vxpos) + 28
+				&& (vypos + 10) >= (ProjectTrinity.currentMap.monsterSpawner.enemy.vypos)
+				&& (vypos) <= (ProjectTrinity.currentMap.monsterSpawner.enemy.vypos) +28  &&ProjectTrinity.currentMap.monsterSpawner.enemy.type != "null") {
+			type = "null";
+			ProjectTrinity.currentMap.monsterSpawner.enemy.adjust_curHealth(healAmount);
+			ProjectTrinity.currentMap.monsterSpawner.enemy.adjust_curHealth(damageAmount);
+		}
 	}
+		
+	
+	
 
 	void render(Graphics g, GameContainer container) {
 		if (type != "null") {
